@@ -32,8 +32,6 @@
 VSMathLib *vsml;
 VSShaderLib shader;
 
-int random;
-
 // Window width / height
 float ratio;
 
@@ -67,10 +65,12 @@ long myTime,timebase = 0,frame = 0;
 char s[32];
 
 // Speed increase timers
-int tActual, tAnterior1, tDif1, tAnterior2, tDif2;
+int tActual, tAnterior, tDif;
 float speed = 0.01f;
 
 GLuint vao;
+
+int random;
 
 // COLORS
 float blue[4] = {0.0f, 0.0f, 0.5f, 1.0f};
@@ -112,9 +112,7 @@ void drawRiver()
 	vsml->pushMatrix(VSMathLib::MODEL);
 	shader.setUniform("color", grass);
 	vsml->scale(VSMathLib::MODEL, 14.0f, 0.6f, 1.0f);
-	vsml->matricesToGL(); 
-	// render VAO 
-	glBindVertexArray(vao); 
+	vsml->matricesToGL();
 	glDrawElements(GL_TRIANGLES, faceCount*3, GL_UNSIGNED_INT, 0); 
 	vsml->popMatrix(VSMathLib::MODEL);
 
@@ -125,8 +123,6 @@ void drawRiver()
 	vsml->scale(VSMathLib::MODEL, 14.0f, 0.5f, 7.0f);
 	// send matrices to uniform buffer
 	vsml->matricesToGL();
-	// render VAO
-	glBindVertexArray(vao);
 	glDrawElements(GL_TRIANGLES, faceCount*3, GL_UNSIGNED_INT, 0);
 	vsml->popMatrix(VSMathLib::MODEL);
 
@@ -135,9 +131,7 @@ void drawRiver()
 	shader.setUniform("color", grass);
 	vsml->translate(VSMathLib::MODEL, 0.0f, 0.0f, -8.0f);
 	vsml->scale(VSMathLib::MODEL, 14.0f, 0.6f, 1.0f);
-	vsml->matricesToGL(); 
-	// render VAO 
-	glBindVertexArray(vao); 
+	vsml->matricesToGL();
 	glDrawElements(GL_TRIANGLES, faceCount*3, GL_UNSIGNED_INT, 0); 
 	vsml->popMatrix(VSMathLib::MODEL);
 }
@@ -151,8 +145,6 @@ void drawStreet()
 	vsml->scale(VSMathLib::MODEL, 14.0f, 0.5f, 7.0f);
 	// send matrices to uniform buffer
 	vsml->matricesToGL();
-	// render VAO
-	glBindVertexArray(vao);
 	glDrawElements(GL_TRIANGLES, faceCount*3, GL_UNSIGNED_INT, 0);
 	vsml->popMatrix(VSMathLib::MODEL);
 
@@ -161,9 +153,7 @@ void drawStreet()
 	shader.setUniform("color", black);
 	vsml->translate(VSMathLib::MODEL, 0.0f, 0.0f, 8.0f);
 	vsml->scale(VSMathLib::MODEL, 14.0f, 0.6f, 1.0f);
-	vsml->matricesToGL(); 
-	// render VAO 
-	glBindVertexArray(vao); 
+	vsml->matricesToGL();
 	glDrawElements(GL_TRIANGLES, faceCount*3, GL_UNSIGNED_INT, 0); 
 	vsml->popMatrix(VSMathLib::MODEL);
 }
@@ -175,9 +165,7 @@ void drawFrog()
 	shader.setUniform("color", frog);
 	vsml->translate(VSMathLib::MODEL, moveX, 0.75f, moveZ);
 	vsml->scale(VSMathLib::MODEL, 0.5f, 0.5f, 0.5f);
-	vsml->matricesToGL(); 
-	// render VAO 
-	glBindVertexArray(vao); 
+	vsml->matricesToGL();
 	glDrawElements(GL_TRIANGLES, faceCount*3, GL_UNSIGNED_INT, 0); 
 	vsml->popMatrix(VSMathLib::MODEL);
 
@@ -185,9 +173,7 @@ void drawFrog()
 	vsml->pushMatrix(VSMathLib::MODEL);
 	shader.setUniform("color", frog);
 	vsml->translate(VSMathLib::MODEL, moveX, 0.8f, moveZ + 0.5f);
-	vsml->matricesToGL(); 
-	// render VAO 
-	glBindVertexArray(vao); 
+	vsml->matricesToGL();
 	glDrawElements(GL_TRIANGLES, faceCount*3, GL_UNSIGNED_INT, 0); 
 	vsml->popMatrix(VSMathLib::MODEL);
 }
@@ -199,9 +185,7 @@ void drawLogCima()
 	shader.setUniform("color", brown);
 	vsml->translate(VSMathLib::MODEL, startPosLog, 0.5f, -5.0f);
 	vsml->scale(VSMathLib::MODEL, 2.0f, 0.5f, 1.0f);
-	vsml->matricesToGL(); 
-	// render VAO 
-	glBindVertexArray(vao); 
+	vsml->matricesToGL();
 	glDrawElements(GL_TRIANGLES, faceCount*3, GL_UNSIGNED_INT, 0); 
 	vsml->popMatrix(VSMathLib::MODEL);
 }
@@ -214,8 +198,6 @@ void drawLogBaixo()
 	vsml->translate(VSMathLib::MODEL, startPosLog, 0.5f, -3.5f);
 	vsml->scale(VSMathLib::MODEL, 2.0f, 0.5f, 1.0f);
 	vsml->matricesToGL();
-	// render VAO 
-	glBindVertexArray(vao);
 	glDrawElements(GL_TRIANGLES, faceCount * 3, GL_UNSIGNED_INT, 0);
 	vsml->popMatrix(VSMathLib::MODEL);
 }
@@ -227,9 +209,7 @@ void drawCarCima()
 	shader.setUniform("color", red);
 	vsml->translate(VSMathLib::MODEL, startPosCar, 1.0f, 3.0f);
 	vsml->scale(VSMathLib::MODEL, 2.0f, 1.0f, 1.0f);
-	vsml->matricesToGL(); 
-	// render VAO 
-	glBindVertexArray(vao); 
+	vsml->matricesToGL();
 	glDrawElements(GL_TRIANGLES, faceCount*3, GL_UNSIGNED_INT, 0); 
 	vsml->popMatrix(VSMathLib::MODEL);
 
@@ -238,9 +218,7 @@ void drawCarCima()
 	shader.setUniform("color", black);
 	vsml->translate(VSMathLib::MODEL, startPosCar + 0.4f, 0.5f, 2.5f);
 	vsml->scale(VSMathLib::MODEL, 0.5f, 0.5f, 0.5f);
-	vsml->matricesToGL(); 
-	// render VAO 
-	glBindVertexArray(vao); 
+	vsml->matricesToGL();
 	glDrawElements(GL_TRIANGLES, faceCount*3, GL_UNSIGNED_INT, 0); 
 	vsml->popMatrix(VSMathLib::MODEL);
 
@@ -249,9 +227,7 @@ void drawCarCima()
 	shader.setUniform("color", black);
 	vsml->translate(VSMathLib::MODEL, startPosCar + 0.4f, 0.5f, 3.5f);
 	vsml->scale(VSMathLib::MODEL, 0.5f, 0.5f, 0.5f);
-	vsml->matricesToGL(); 
-	// render VAO 
-	glBindVertexArray(vao); 
+	vsml->matricesToGL();
 	glDrawElements(GL_TRIANGLES, faceCount*3, GL_UNSIGNED_INT, 0); 
 	vsml->popMatrix(VSMathLib::MODEL);
 
@@ -260,9 +236,7 @@ void drawCarCima()
 	shader.setUniform("color", black);
 	vsml->translate(VSMathLib::MODEL, startPosCar - 0.6f, 0.5f, 2.5f);
 	vsml->scale(VSMathLib::MODEL, 0.5f, 0.5f, 0.5f);
-	vsml->matricesToGL(); 
-	// render VAO 
-	glBindVertexArray(vao); 
+	vsml->matricesToGL();
 	glDrawElements(GL_TRIANGLES, faceCount*3, GL_UNSIGNED_INT, 0); 
 	vsml->popMatrix(VSMathLib::MODEL);
 
@@ -271,9 +245,7 @@ void drawCarCima()
 	shader.setUniform("color", black);
 	vsml->translate(VSMathLib::MODEL, startPosCar - 0.6f, 0.5f, 3.5f);
 	vsml->scale(VSMathLib::MODEL, 0.5f, 0.5f, 0.5f);
-	vsml->matricesToGL(); 
-	// render VAO 
-	glBindVertexArray(vao); 
+	vsml->matricesToGL();
 	glDrawElements(GL_TRIANGLES, faceCount*3, GL_UNSIGNED_INT, 0); 
 	vsml->popMatrix(VSMathLib::MODEL);
 }
@@ -286,8 +258,6 @@ void drawCarBaixo()
 	vsml->translate(VSMathLib::MODEL, startPosCar, 1.0f, 6.5f);
 	vsml->scale(VSMathLib::MODEL, 2.0f, 1.0f, 1.0f);
 	vsml->matricesToGL();
-	// render VAO 
-	glBindVertexArray(vao);
 	glDrawElements(GL_TRIANGLES, faceCount * 3, GL_UNSIGNED_INT, 0);
 	vsml->popMatrix(VSMathLib::MODEL);
 
@@ -297,8 +267,6 @@ void drawCarBaixo()
 	vsml->translate(VSMathLib::MODEL, startPosCar + 0.4f, 0.5f, 6.0f);
 	vsml->scale(VSMathLib::MODEL, 0.5f, 0.5f, 0.5f);
 	vsml->matricesToGL();
-	// render VAO 
-	glBindVertexArray(vao);
 	glDrawElements(GL_TRIANGLES, faceCount * 3, GL_UNSIGNED_INT, 0);
 	vsml->popMatrix(VSMathLib::MODEL);
 
@@ -308,8 +276,6 @@ void drawCarBaixo()
 	vsml->translate(VSMathLib::MODEL, startPosCar + 0.4f, 0.5f, 7.0f);
 	vsml->scale(VSMathLib::MODEL, 0.5f, 0.5f, 0.5f);
 	vsml->matricesToGL();
-	// render VAO 
-	glBindVertexArray(vao);
 	glDrawElements(GL_TRIANGLES, faceCount * 3, GL_UNSIGNED_INT, 0);
 	vsml->popMatrix(VSMathLib::MODEL);
 
@@ -319,8 +285,6 @@ void drawCarBaixo()
 	vsml->translate(VSMathLib::MODEL, startPosCar - 0.6f, 0.5f, 6.0f);
 	vsml->scale(VSMathLib::MODEL, 0.5f, 0.5f, 0.5f);
 	vsml->matricesToGL();
-	// render VAO 
-	glBindVertexArray(vao);
 	glDrawElements(GL_TRIANGLES, faceCount * 3, GL_UNSIGNED_INT, 0);
 	vsml->popMatrix(VSMathLib::MODEL);
 
@@ -330,8 +294,6 @@ void drawCarBaixo()
 	vsml->translate(VSMathLib::MODEL, startPosCar - 0.6f, 0.5f, 7.0f);
 	vsml->scale(VSMathLib::MODEL, 0.5f, 0.5f, 0.5f);
 	vsml->matricesToGL();
-	// render VAO 
-	glBindVertexArray(vao);
 	glDrawElements(GL_TRIANGLES, faceCount * 3, GL_UNSIGNED_INT, 0);
 	vsml->popMatrix(VSMathLib::MODEL);
 }
@@ -344,8 +306,6 @@ void drawBusCima()
 	vsml->translate(VSMathLib::MODEL, startPosBus, 1.0f, 1.5f);
 	vsml->scale(VSMathLib::MODEL, 4.0f, 2.0f, 1.0f);
 	vsml->matricesToGL();
-	// render VAO 
-	glBindVertexArray(vao);
 	glDrawElements(GL_TRIANGLES, faceCount * 3, GL_UNSIGNED_INT, 0);
 	vsml->popMatrix(VSMathLib::MODEL);
 
@@ -355,8 +315,6 @@ void drawBusCima()
 	vsml->translate(VSMathLib::MODEL, startPosBus + 0.9f, 0.5f, 1.0f);
 	vsml->scale(VSMathLib::MODEL, 0.5f, 0.5f, 0.5f);
 	vsml->matricesToGL();
-	// render VAO 
-	glBindVertexArray(vao);
 	glDrawElements(GL_TRIANGLES, faceCount * 3, GL_UNSIGNED_INT, 0);
 	vsml->popMatrix(VSMathLib::MODEL);
 
@@ -366,8 +324,6 @@ void drawBusCima()
 	vsml->translate(VSMathLib::MODEL, startPosBus + 0.9f, 0.5f, 2.0f);
 	vsml->scale(VSMathLib::MODEL, 0.5f, 0.5f, 0.5f);
 	vsml->matricesToGL();
-	// render VAO 
-	glBindVertexArray(vao);
 	glDrawElements(GL_TRIANGLES, faceCount * 3, GL_UNSIGNED_INT, 0);
 	vsml->popMatrix(VSMathLib::MODEL);
 
@@ -377,8 +333,6 @@ void drawBusCima()
 	vsml->translate(VSMathLib::MODEL, startPosBus - 1.1f, 0.5f, 1.0f);
 	vsml->scale(VSMathLib::MODEL, 0.5f, 0.5f, 0.5f);
 	vsml->matricesToGL();
-	// render VAO 
-	glBindVertexArray(vao);
 	glDrawElements(GL_TRIANGLES, faceCount * 3, GL_UNSIGNED_INT, 0);
 	vsml->popMatrix(VSMathLib::MODEL);
 
@@ -388,8 +342,6 @@ void drawBusCima()
 	vsml->translate(VSMathLib::MODEL, startPosBus - 1.1f, 0.5f, 2.0f);
 	vsml->scale(VSMathLib::MODEL, 0.5f, 0.5f, 0.5f);
 	vsml->matricesToGL();
-	// render VAO 
-	glBindVertexArray(vao);
 	glDrawElements(GL_TRIANGLES, faceCount * 3, GL_UNSIGNED_INT, 0);
 	vsml->popMatrix(VSMathLib::MODEL);
 }
@@ -401,9 +353,7 @@ void drawBusBaixo()
 	shader.setUniform("color", blue);
 	vsml->translate(VSMathLib::MODEL, startPosBus, 1.0f, 5.0f);
 	vsml->scale(VSMathLib::MODEL, 4.0f, 2.0f, 1.0f);
-	vsml->matricesToGL(); 
-	// render VAO 
-	glBindVertexArray(vao); 
+	vsml->matricesToGL();
 	glDrawElements(GL_TRIANGLES, faceCount*3, GL_UNSIGNED_INT, 0); 
 	vsml->popMatrix(VSMathLib::MODEL);
 
@@ -412,9 +362,7 @@ void drawBusBaixo()
 	shader.setUniform("color", black);
 	vsml->translate(VSMathLib::MODEL, startPosBus + 0.9f, 0.5f, 4.5f);
 	vsml->scale(VSMathLib::MODEL, 0.5f, 0.5f, 0.5f);
-	vsml->matricesToGL(); 
-	// render VAO 
-	glBindVertexArray(vao); 
+	vsml->matricesToGL();
 	glDrawElements(GL_TRIANGLES, faceCount*3, GL_UNSIGNED_INT, 0); 
 	vsml->popMatrix(VSMathLib::MODEL);
 
@@ -423,9 +371,7 @@ void drawBusBaixo()
 	shader.setUniform("color", black);
 	vsml->translate(VSMathLib::MODEL, startPosBus + 0.9f, 0.5f, 5.5f);
 	vsml->scale(VSMathLib::MODEL, 0.5f, 0.5f, 0.5f);
-	vsml->matricesToGL(); 
-	// render VAO 
-	glBindVertexArray(vao); 
+	vsml->matricesToGL();
 	glDrawElements(GL_TRIANGLES, faceCount*3, GL_UNSIGNED_INT, 0); 
 	vsml->popMatrix(VSMathLib::MODEL);
 
@@ -434,9 +380,7 @@ void drawBusBaixo()
 	shader.setUniform("color", black);
 	vsml->translate(VSMathLib::MODEL, startPosBus - 1.1f, 0.5f, 4.5f);
 	vsml->scale(VSMathLib::MODEL, 0.5f, 0.5f, 0.5f);
-	vsml->matricesToGL(); 
-	// render VAO 
-	glBindVertexArray(vao); 
+	vsml->matricesToGL();
 	glDrawElements(GL_TRIANGLES, faceCount*3, GL_UNSIGNED_INT, 0); 
 	vsml->popMatrix(VSMathLib::MODEL);
 
@@ -445,9 +389,7 @@ void drawBusBaixo()
 	shader.setUniform("color", black);
 	vsml->translate(VSMathLib::MODEL, startPosBus - 1.1f, 0.5f, 5.5f);
 	vsml->scale(VSMathLib::MODEL, 0.5f, 0.5f, 0.5f);
-	vsml->matricesToGL(); 
-	// render VAO 
-	glBindVertexArray(vao); 
+	vsml->matricesToGL();
 	glDrawElements(GL_TRIANGLES, faceCount*3, GL_UNSIGNED_INT, 0); 
 	vsml->popMatrix(VSMathLib::MODEL);
 }
@@ -460,8 +402,6 @@ void drawTurtleCima()
 	vsml->translate(VSMathLib::MODEL, startPosTurtle, 1.0f, -6.5f);
 	vsml->scale(VSMathLib::MODEL, 1.0f, 1.0f, 1.0f);
 	vsml->matricesToGL();
-	// render VAO
-	glBindVertexArray(vao);
 	glDrawElements(GL_TRIANGLES, faceCount * 3, GL_UNSIGNED_INT, 0);
 	vsml->popMatrix(VSMathLib::MODEL);
 
@@ -471,8 +411,6 @@ void drawTurtleCima()
 	vsml->translate(VSMathLib::MODEL, startPosTurtle + 0.5f, 0.5f, -7.0f);
 	vsml->scale(VSMathLib::MODEL, 0.5f, 0.5f, 0.5f);
 	vsml->matricesToGL();
-	// render VAO
-	glBindVertexArray(vao);
 	glDrawElements(GL_TRIANGLES, faceCount * 3, GL_UNSIGNED_INT, 0);
 	vsml->popMatrix(VSMathLib::MODEL);
 
@@ -482,8 +420,6 @@ void drawTurtleCima()
 	vsml->translate(VSMathLib::MODEL, startPosTurtle + 0.5f, 0.5f, -6.0f);
 	vsml->scale(VSMathLib::MODEL, 0.5f, 0.5f, 0.5f);
 	vsml->matricesToGL();
-	// render VAO
-	glBindVertexArray(vao);
 	glDrawElements(GL_TRIANGLES, faceCount * 3, GL_UNSIGNED_INT, 0);
 	vsml->popMatrix(VSMathLib::MODEL);
 
@@ -493,8 +429,6 @@ void drawTurtleCima()
 	vsml->translate(VSMathLib::MODEL, startPosTurtle - 0.5f, 0.5f, -7.0f);
 	vsml->scale(VSMathLib::MODEL, 0.5f, 0.5f, 0.5f);
 	vsml->matricesToGL();
-	// render VAO
-	glBindVertexArray(vao);
 	glDrawElements(GL_TRIANGLES, faceCount * 3, GL_UNSIGNED_INT, 0);
 	vsml->popMatrix(VSMathLib::MODEL);
 
@@ -504,8 +438,6 @@ void drawTurtleCima()
 	vsml->translate(VSMathLib::MODEL, startPosTurtle - 0.5f, 0.5f, -6.0f);
 	vsml->scale(VSMathLib::MODEL, 0.5f, 0.5f, 0.5f);
 	vsml->matricesToGL();
-	// render VAO
-	glBindVertexArray(vao);
 	glDrawElements(GL_TRIANGLES, faceCount * 3, GL_UNSIGNED_INT, 0);
 	vsml->popMatrix(VSMathLib::MODEL);
 }
@@ -518,8 +450,6 @@ void drawTurtleBaixo()
 	vsml->translate(VSMathLib::MODEL, startPosTurtle, 1.0f, -2.0f);
 	vsml->scale(VSMathLib::MODEL, 1.0f, 1.0f, 1.0f);
 	vsml->matricesToGL();
-	// render VAO
-	glBindVertexArray(vao);
 	glDrawElements(GL_TRIANGLES, faceCount*3, GL_UNSIGNED_INT, 0);
 	vsml->popMatrix(VSMathLib::MODEL);
 
@@ -529,8 +459,6 @@ void drawTurtleBaixo()
 	vsml->translate(VSMathLib::MODEL, startPosTurtle + 0.5f, 0.5f, -2.5f);
 	vsml->scale(VSMathLib::MODEL, 0.5f, 0.5f, 0.5f);
 	vsml->matricesToGL();
-	// render VAO
-	glBindVertexArray(vao);
 	glDrawElements(GL_TRIANGLES, faceCount*3, GL_UNSIGNED_INT, 0);
 	vsml->popMatrix(VSMathLib::MODEL);
 
@@ -540,8 +468,6 @@ void drawTurtleBaixo()
 	vsml->translate(VSMathLib::MODEL, startPosTurtle + 0.5f, 0.5f, -1.5f);
 	vsml->scale(VSMathLib::MODEL, 0.5f, 0.5f, 0.5f);
 	vsml->matricesToGL();
-	// render VAO
-	glBindVertexArray(vao);
 	glDrawElements(GL_TRIANGLES, faceCount*3, GL_UNSIGNED_INT, 0);
 	vsml->popMatrix(VSMathLib::MODEL);
 
@@ -551,8 +477,6 @@ void drawTurtleBaixo()
 	vsml->translate(VSMathLib::MODEL, startPosTurtle - 0.5f, 0.5f, -2.5f);
 	vsml->scale(VSMathLib::MODEL, 0.5f, 0.5f, 0.5f);
 	vsml->matricesToGL();
-	// render VAO
-	glBindVertexArray(vao);
 	glDrawElements(GL_TRIANGLES, faceCount*3, GL_UNSIGNED_INT, 0);
 	vsml->popMatrix(VSMathLib::MODEL);
 
@@ -562,8 +486,6 @@ void drawTurtleBaixo()
 	vsml->translate(VSMathLib::MODEL, startPosTurtle - 0.5f, 0.5f, -1.5f);
 	vsml->scale(VSMathLib::MODEL, 0.5f, 0.5f, 0.5f);
 	vsml->matricesToGL();
-	// render VAO
-	glBindVertexArray(vao);
 	glDrawElements(GL_TRIANGLES, faceCount*3, GL_UNSIGNED_INT, 0);
 	vsml->popMatrix(VSMathLib::MODEL);
 }
@@ -600,18 +522,30 @@ void renderScene(void) {
 	glUseProgram(shader.getProgramIndex());
 
 	/////////////////////////////////////////////////////////
-
+	glBindVertexArray(vao);
 	drawStreet();
 	drawRiver();
 	drawFrog();
-	drawLogCima();
-	drawLogBaixo();
-	drawCarCima();
-	drawCarBaixo();
-	drawBusBaixo();
-	drawBusCima();
-	drawTurtleCima();
-	drawTurtleBaixo();
+	if(random == 0)
+	{
+		drawLogCima();
+		drawCarCima();
+	}
+	else if(random == 1)
+	{
+			drawTurtleCima();
+			drawBusCima();
+	}
+	else if( random == 2)
+	{
+		drawLogBaixo();
+		drawBusBaixo();
+	}
+	else
+	{
+		drawTurtleBaixo();
+		drawCarBaixo();
+	}
 
 	/////////////////////////////////////////////////////////
 
@@ -652,7 +586,7 @@ void processKeys(unsigned char key, int xx, int yy)
 	case '3':
 		vsml->loadIdentity(VSMathLib::PROJECTION);
 		eyeX = moveX; eyeY = 4.0f; eyeZ = moveZ+3; dirX = camX; dirY = 1.0f; dirZ = camZ; upX = 0; upY = 1; upZ = 0;
-		vsml->perspective(80.0f, ratio, 0.1f, 50.0f);
+		vsml->perspective(80, ratio, 0.1, 50);
 		isIn3 = true;
 		isIn4 = false;
 		break;
@@ -660,7 +594,7 @@ void processKeys(unsigned char key, int xx, int yy)
 	case '4':
 		vsml->loadIdentity(VSMathLib::PROJECTION);
 		eyeX = camX + moveX; eyeY = 3.0f; eyeZ = camZ + moveZ; dirX = moveX; dirY = 1.0f; dirZ = moveZ; upX = 0; upY = 1; upZ = 0;
-		vsml->perspective(80.0f, ratio, 0.1f, 50.0f);
+		vsml->perspective(80, ratio, 0.1, 50);
 		isIn3 = false;
 		isIn4 = true;
 		break;
@@ -783,27 +717,21 @@ void processMouseMotion(int xx, int yy)
 
 void myTimer(int value) {
 	tActual = glutGet(GLUT_ELAPSED_TIME);
-	tDif1 = tActual - tAnterior1;
-	tDif2 = tActual - tAnterior2;
-	if (tDif1 >= 3000){
-		speed *= 2.0f;
-		tAnterior1 = tActual;
-		printf("%f\n", speed);
-	}
-	if (tDif2 >= 5000){
-		random = rand() % (5 - 0);
-		tAnterior2 = tActual;
-		printf("%d\n", random);
+	tDif = tActual - tAnterior;
+	if (tDif >= 3000){
+		speed *= 1.5f;
+		tAnterior = tActual;
 	}
 	startPosBus += speed;
 	startPosCar += speed*1.5f;
 	startPosLog += speed*2.0f;
 	startPosTurtle += speed*2.5f;
-	if (startPosBus > 9.0f){
+	if (startPosBus > 9.0f || startPosCar > 9.0f){
 		startPosCar = -6.0f;
 		startPosBus = -5.0f;
 		startPosLog = -6.0f;
 		startPosTurtle = -6.0f;
+		random = rand() % 4;
 	}
 	glutPostRedisplay();
 	glutTimerFunc(1000/60, myTimer, 1);
@@ -861,6 +789,8 @@ void initOpenGL()
 
 	moveX = 0.0f;
 	moveZ = 7.5f;
+
+	random = rand() % 4;
 
 	// some GL settings
 	glEnable(GL_DEPTH_TEST);
@@ -964,8 +894,7 @@ int main(int argc, char **argv) {
 
 	initVSL();
 
-	tAnterior1 = glutGet(GLUT_ELAPSED_TIME);
-	tAnterior2 = glutGet(GLUT_ELAPSED_TIME);
+	tAnterior = glutGet(GLUT_ELAPSED_TIME);
 
 	//  GLUT main loop
 	glutMainLoop();
