@@ -5,11 +5,11 @@
 
 class Timberlog : public DynamicObject
 {
-	
+public:
 	Timberlog();
 	~Timberlog();
 
-	void draw();
+	void draw(VSMathLib *vsml, VSShaderLib shader);
 
 };
 #endif

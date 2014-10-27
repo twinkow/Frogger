@@ -1,7 +1,7 @@
 #include "Bus.h"
 
 Bus::Bus(){
-	_position.set(-6.0, 1.0, 1.5);
+	_position.set(-5.0, 1.0, 1.5);
 }
 
 Bus::~Bus(){}
