@@ -27,3 +27,8 @@
 *.out
 *.app
 *.opensdf
+*.sdf
+*.suo
+*.sln
+*.vcxproj
+*.filters
