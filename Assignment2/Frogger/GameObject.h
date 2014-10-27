@@ -7,6 +7,8 @@
 #include "VSShaderlib.h"
 //#include "DrawComponents.h"
 
+#include "VSMathlib.h"
+#include "VSShaderlib.h"
 
 
 class GameObject : public Entity

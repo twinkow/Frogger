@@ -20,7 +20,8 @@
 #include "shaderDemo.h"
 
 #include "River.h"
-#include "RiverSide.h"
+#include "Road.h"
+#include "RoadSide.h"
 
 // include GLEW to access OpenGL 3.3 functions
 #include <GL/glew.h>
@@ -33,6 +34,8 @@ VSShaderLib shader;
 
 River river;
 RiverSide riverSide;
+Road road;
+RoadSide roadside;
 
 
 // Window width / height
@@ -511,6 +514,8 @@ void renderScene(void) {
 	river.draw(vsml, shader);
 	riverSide.draw(vsml, shader);
 
+	road.draw(vsml, shader);
+	roadside.draw(vsml, shader);
 	//drawStreet();
 	//drawRiver();
 	//drawFrog();
