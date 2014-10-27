@@ -10,7 +10,7 @@ public:
 	Bus();
 	~Bus();
 
-	void draw();
+	void draw(VSMathLib *vsml, VSShaderLib shader);
 
 };
 #endif

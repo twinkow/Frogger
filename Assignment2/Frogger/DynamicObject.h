@@ -3,7 +3,7 @@
 
 #include "GameObject.h"
 
-class DynamicObject : GameObject
+class DynamicObject : public GameObject
 {
 
 protected:

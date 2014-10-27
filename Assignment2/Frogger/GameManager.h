@@ -22,8 +22,8 @@ public:
 	GameManager();
 	~GameManager();
 
-	void display();
-	void reshape(GLsizei in_w, GLsizei in_h);
+	void display(VSMathLib *vsml);
+	void reshape(GLsizei in_w, GLsizei in_h, VSMathLib *vsml);
 	void keyPressed();
 	void onTimer();
 	void idle();

@@ -1,7 +1,9 @@
 #include "DynamicObject.h"
 
 
-DynamicObject::DynamicObject(){}
+DynamicObject::DynamicObject(){
+	GameObject::initialize();
+}
 
 DynamicObject::~DynamicObject(){}
 

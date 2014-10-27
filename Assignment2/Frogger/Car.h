@@ -10,7 +10,7 @@ public:
 	Car();
 	~Car();
 
-	void draw();
+	void draw(VSMathLib *vsml, VSShaderLib shader);
 
 };
 #endif

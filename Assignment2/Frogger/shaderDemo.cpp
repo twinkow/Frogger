@@ -22,6 +22,9 @@
 #include "River.h"
 #include "Road.h"
 #include "RoadSide.h"
+#include "RiverSide.h"
+#include "Car.h"
+#include "Bus.h"
 
 // include GLEW to access OpenGL 3.3 functions
 #include <GL/glew.h>
@@ -36,6 +39,8 @@ River river;
 RiverSide riverSide;
 Road road;
 RoadSide roadside;
+Car car;
+Bus bus;
 
 
 // Window width / height
@@ -516,6 +521,8 @@ void renderScene(void) {
 
 	road.draw(vsml, shader);
 	roadside.draw(vsml, shader);
+	car.draw(vsml, shader);
+	bus.draw(vsml, shader);
 	//drawStreet();
 	//drawRiver();
 	//drawFrog();
