@@ -137,9 +137,6 @@
     <ClCompile Include="Frogger\RoadSide.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Frogger\shaderDemo.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Frogger\Timberlog.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -153,6 +150,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Frogger\vsShaderLib.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Frogger\StaticObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Frogger\Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

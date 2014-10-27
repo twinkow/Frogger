@@ -4,6 +4,8 @@ Vector3::Vector3() : _x(1), _y(1), _z(1) {}
 
 Vector3::Vector3(double in_x, double in_y, double in_z) : _x(in_x), _y(in_y), _z(in_z) {}
 
+Vector3::~Vector3(){}
+
 double Vector3::getX() const{ return _x; }
 
 double Vector3::getY() const{ return _y; }

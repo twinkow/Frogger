@@ -5,7 +5,7 @@
 
 class OrthogonalCamera : public Camera
 {
-protected:
+private:
 	double _left;
 	double _right;
 	double _bottom;

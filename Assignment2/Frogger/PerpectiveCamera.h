@@ -5,7 +5,7 @@
 
 class PerpectiveCamera : public Camera
 {
-protected:
+private:
 	double _fovy;
 	double _aspect;
 
