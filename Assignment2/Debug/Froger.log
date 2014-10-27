@@ -1,0 +1,137 @@
+﻿Build started 27-10-2014 01:43:11.
+     1>Project "C:\Users\Bruno\Documents\Visual Studio 2012\Projects\Froger\Assignment2\Froger.vcxproj" on node 2 (Rebuild target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt Frogger\Bus.cpp Frogger\Camera.cpp Frogger\Car.cpp Frogger\DynamicObject.cpp Frogger\Entity.cpp Frogger\Frog.cpp Frogger\GameManager.cpp Frogger\GameObject.cpp Frogger\LightSource.cpp Frogger\OrthogonalCamera.cpp Frogger\PerpectiveCamera.cpp Frogger\River.cpp Frogger\RiverSide.cpp Frogger\Road.cpp Frogger\RoadSide.cpp Frogger\Timberlog.cpp Frogger\Turtle.cpp Frogger\Vector3.cpp Frogger\Vector4.cpp Frogger\vsMathLib.cpp Frogger\vsShaderLib.cpp
+         vsShaderLib.cpp
+         vsMathLib.cpp
+         Vector4.cpp
+         Vector3.cpp
+         Turtle.cpp
+         Timberlog.cpp
+         RoadSide.cpp
+         Road.cpp
+         RiverSide.cpp
+         River.cpp
+         PerpectiveCamera.cpp
+         OrthogonalCamera.cpp
+         LightSource.cpp
+         GameObject.cpp
+         GameManager.cpp
+         Frog.cpp
+         Entity.cpp
+         DynamicObject.cpp
+         Car.cpp
+         Camera.cpp
+         Generating Code...
+         Compiling...
+         Bus.cpp
+         Generating Code...
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Bruno\Documents\Visual Studio 2012\Projects\Froger\Assignment2\Debug\Frogger.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Bruno\Documents\Visual Studio 2012\Projects\Froger\Assignment2\Debug\Frogger.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Bruno\Documents\Visual Studio 2012\Projects\Froger\Assignment2\Debug\Frogger.lib" /MACHINE:X86 Debug\Bus.obj
+         Debug\Camera.obj
+         Debug\Car.obj
+         Debug\DynamicObject.obj
+         Debug\Entity.obj
+         Debug\Frog.obj
+         Debug\GameManager.obj
+         Debug\GameObject.obj
+         Debug\LightSource.obj
+         Debug\OrthogonalCamera.obj
+         Debug\PerpectiveCamera.obj
+         Debug\River.obj
+         Debug\RiverSide.obj
+         Debug\Road.obj
+         Debug\RoadSide.obj
+         Debug\Timberlog.obj
+         Debug\Turtle.obj
+         Debug\Vector3.obj
+         Debug\Vector4.obj
+         Debug\vsMathLib.obj
+         Debug\vsShaderLib.obj
+     1>Vector4.obj : error LNK2001: unresolved external symbol "public: __thiscall Vector3::~Vector3(void)" (??1Vector3@@QAE@XZ)
+     1>Camera.obj : error LNK2019: unresolved external symbol "public: __thiscall Vector3::~Vector3(void)" (??1Vector3@@QAE@XZ) referenced in function __unwindfunclet$??0Camera@@QAE@NN@Z$1
+     1>DynamicObject.obj : error LNK2001: unresolved external symbol "public: __thiscall Vector3::~Vector3(void)" (??1Vector3@@QAE@XZ)
+     1>Entity.obj : error LNK2001: unresolved external symbol "public: __thiscall Vector3::~Vector3(void)" (??1Vector3@@QAE@XZ)
+     1>LightSource.obj : error LNK2001: unresolved external symbol "public: __thiscall Vector3::~Vector3(void)" (??1Vector3@@QAE@XZ)
+     1>River.obj : error LNK2019: unresolved external symbol "public: __thiscall StaticObject::StaticObject(void)" (??0StaticObject@@QAE@XZ) referenced in function "public: __thiscall River::River(void)" (??0River@@QAE@XZ)
+     1>RiverSide.obj : error LNK2001: unresolved external symbol "public: __thiscall StaticObject::StaticObject(void)" (??0StaticObject@@QAE@XZ)
+     1>Road.obj : error LNK2001: unresolved external symbol "public: __thiscall StaticObject::StaticObject(void)" (??0StaticObject@@QAE@XZ)
+     1>RoadSide.obj : error LNK2001: unresolved external symbol "public: __thiscall StaticObject::StaticObject(void)" (??0StaticObject@@QAE@XZ)
+     1>River.obj : error LNK2019: unresolved external symbol "public: __thiscall StaticObject::~StaticObject(void)" (??1StaticObject@@QAE@XZ) referenced in function "public: __thiscall River::~River(void)" (??1River@@QAE@XZ)
+     1>RiverSide.obj : error LNK2001: unresolved external symbol "public: __thiscall StaticObject::~StaticObject(void)" (??1StaticObject@@QAE@XZ)
+     1>Road.obj : error LNK2001: unresolved external symbol "public: __thiscall StaticObject::~StaticObject(void)" (??1StaticObject@@QAE@XZ)
+     1>RoadSide.obj : error LNK2001: unresolved external symbol "public: __thiscall StaticObject::~StaticObject(void)" (??1StaticObject@@QAE@XZ)
+     1>vsMathLib.obj : error LNK2001: unresolved external symbol __imp____glewGetUniformLocation
+     1>vsShaderLib.obj : error LNK2001: unresolved external symbol __imp____glewGetUniformLocation
+     1>vsMathLib.obj : error LNK2001: unresolved external symbol __imp____glewProgramUniformMatrix3fv
+     1>vsShaderLib.obj : error LNK2001: unresolved external symbol __imp____glewProgramUniformMatrix3fv
+     1>vsMathLib.obj : error LNK2001: unresolved external symbol __imp____glewProgramUniformMatrix4fv
+     1>vsShaderLib.obj : error LNK2001: unresolved external symbol __imp____glewProgramUniformMatrix4fv
+     1>vsShaderLib.obj : error LNK2001: unresolved external symbol __imp____glewBindBuffer
+     1>vsShaderLib.obj : error LNK2001: unresolved external symbol __imp____glewBufferData
+     1>vsShaderLib.obj : error LNK2001: unresolved external symbol __imp____glewBufferSubData
+     1>vsShaderLib.obj : error LNK2001: unresolved external symbol __imp____glewGenBuffers
+     1>vsShaderLib.obj : error LNK2001: unresolved external symbol __imp____glewAttachShader
+     1>vsShaderLib.obj : error LNK2001: unresolved external symbol __imp____glewBindAttribLocation
+     1>vsShaderLib.obj : error LNK2001: unresolved external symbol __imp____glewCompileShader
+     1>vsShaderLib.obj : error LNK2001: unresolved external symbol __imp____glewCreateProgram
+     1>vsShaderLib.obj : error LNK2001: unresolved external symbol __imp____glewCreateShader
+     1>vsShaderLib.obj : error LNK2001: unresolved external symbol __imp____glewDeleteProgram
+     1>vsShaderLib.obj : error LNK2001: unresolved external symbol __imp____glewDeleteShader
+     1>vsShaderLib.obj : error LNK2001: unresolved external symbol __imp____glewGetActiveUniform
+     1>vsShaderLib.obj : error LNK2001: unresolved external symbol __imp____glewGetProgramInfoLog
+     1>vsShaderLib.obj : error LNK2001: unresolved external symbol __imp____glewGetProgramiv
+     1>vsShaderLib.obj : error LNK2001: unresolved external symbol __imp____glewGetShaderInfoLog
+     1>vsShaderLib.obj : error LNK2001: unresolved external symbol __imp____glewGetShaderiv
+     1>vsShaderLib.obj : error LNK2001: unresolved external symbol __imp____glewLinkProgram
+     1>vsShaderLib.obj : error LNK2001: unresolved external symbol __imp____glewShaderSource
+     1>vsShaderLib.obj : error LNK2001: unresolved external symbol __imp____glewValidateProgram
+     1>vsShaderLib.obj : error LNK2001: unresolved external symbol __imp____glewBindFragDataLocation
+     1>vsShaderLib.obj : error LNK2001: unresolved external symbol __imp____glewGetFragDataLocation
+     1>vsShaderLib.obj : error LNK2001: unresolved external symbol __imp____glewProgramUniform1dv
+     1>vsShaderLib.obj : error LNK2001: unresolved external symbol __imp____glewProgramUniform1f
+     1>vsShaderLib.obj : error LNK2001: unresolved external symbol __imp____glewProgramUniform1fv
+     1>vsShaderLib.obj : error LNK2001: unresolved external symbol __imp____glewProgramUniform1i
+     1>vsShaderLib.obj : error LNK2001: unresolved external symbol __imp____glewProgramUniform1iv
+     1>vsShaderLib.obj : error LNK2001: unresolved external symbol __imp____glewProgramUniform1uiv
+     1>vsShaderLib.obj : error LNK2001: unresolved external symbol __imp____glewProgramUniform2dv
+     1>vsShaderLib.obj : error LNK2001: unresolved external symbol __imp____glewProgramUniform2fv
+     1>vsShaderLib.obj : error LNK2001: unresolved external symbol __imp____glewProgramUniform2iv
+     1>vsShaderLib.obj : error LNK2001: unresolved external symbol __imp____glewProgramUniform2uiv
+     1>vsShaderLib.obj : error LNK2001: unresolved external symbol __imp____glewProgramUniform3dv
+     1>vsShaderLib.obj : error LNK2001: unresolved external symbol __imp____glewProgramUniform3fv
+     1>vsShaderLib.obj : error LNK2001: unresolved external symbol __imp____glewProgramUniform3iv
+     1>vsShaderLib.obj : error LNK2001: unresolved external symbol __imp____glewProgramUniform3uiv
+     1>vsShaderLib.obj : error LNK2001: unresolved external symbol __imp____glewProgramUniform4dv
+     1>vsShaderLib.obj : error LNK2001: unresolved external symbol __imp____glewProgramUniform4fv
+     1>vsShaderLib.obj : error LNK2001: unresolved external symbol __imp____glewProgramUniform4iv
+     1>vsShaderLib.obj : error LNK2001: unresolved external symbol __imp____glewProgramUniform4uiv
+     1>vsShaderLib.obj : error LNK2001: unresolved external symbol __imp____glewProgramUniformMatrix2dv
+     1>vsShaderLib.obj : error LNK2001: unresolved external symbol __imp____glewProgramUniformMatrix2fv
+     1>vsShaderLib.obj : error LNK2001: unresolved external symbol __imp____glewProgramUniformMatrix2x3dv
+     1>vsShaderLib.obj : error LNK2001: unresolved external symbol __imp____glewProgramUniformMatrix2x3fv
+     1>vsShaderLib.obj : error LNK2001: unresolved external symbol __imp____glewProgramUniformMatrix2x4dv
+     1>vsShaderLib.obj : error LNK2001: unresolved external symbol __imp____glewProgramUniformMatrix2x4fv
+     1>vsShaderLib.obj : error LNK2001: unresolved external symbol __imp____glewProgramUniformMatrix3dv
+     1>vsShaderLib.obj : error LNK2001: unresolved external symbol __imp____glewProgramUniformMatrix3x2dv
+     1>vsShaderLib.obj : error LNK2001: unresolved external symbol __imp____glewProgramUniformMatrix3x2fv
+     1>vsShaderLib.obj : error LNK2001: unresolved external symbol __imp____glewProgramUniformMatrix3x4dv
+     1>vsShaderLib.obj : error LNK2001: unresolved external symbol __imp____glewProgramUniformMatrix3x4fv
+     1>vsShaderLib.obj : error LNK2001: unresolved external symbol __imp____glewProgramUniformMatrix4dv
+     1>vsShaderLib.obj : error LNK2001: unresolved external symbol __imp____glewProgramUniformMatrix4x2dv
+     1>vsShaderLib.obj : error LNK2001: unresolved external symbol __imp____glewProgramUniformMatrix4x2fv
+     1>vsShaderLib.obj : error LNK2001: unresolved external symbol __imp____glewProgramUniformMatrix4x3dv
+     1>vsShaderLib.obj : error LNK2001: unresolved external symbol __imp____glewProgramUniformMatrix4x3fv
+     1>vsShaderLib.obj : error LNK2001: unresolved external symbol __imp____glewBindBufferRange
+     1>vsShaderLib.obj : error LNK2001: unresolved external symbol __imp____glewGetActiveUniformBlockName
+     1>vsShaderLib.obj : error LNK2001: unresolved external symbol __imp____glewGetActiveUniformBlockiv
+     1>vsShaderLib.obj : error LNK2001: unresolved external symbol __imp____glewGetActiveUniformName
+     1>vsShaderLib.obj : error LNK2001: unresolved external symbol __imp____glewGetActiveUniformsiv
+     1>vsShaderLib.obj : error LNK2001: unresolved external symbol __imp____glewUniformBlockBinding
+     1>MSVCRTD.lib(crtexe.obj) : error LNK2019: unresolved external symbol _main referenced in function ___tmainCRTStartup
+     1>C:\Users\Bruno\Documents\Visual Studio 2012\Projects\Froger\Assignment2\Debug\Frogger.exe : fatal error LNK1120: 68 unresolved externals
+     1>Done Building Project "C:\Users\Bruno\Documents\Visual Studio 2012\Projects\Froger\Assignment2\Froger.vcxproj" (Rebuild target(s)) -- FAILED.
+
+Build FAILED.
+
+Time Elapsed 00:00:12.48
