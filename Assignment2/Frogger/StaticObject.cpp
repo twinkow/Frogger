@@ -1,6 +1,8 @@
 #include "StaticObject.h"
 
 
-StaticObject::StaticObject(){}
+StaticObject::StaticObject(){
+	GameObject::initialize();
+};
 
 StaticObject::~StaticObject(){}

@@ -12,7 +12,7 @@ public:
 	Entity();
 	~Entity();
 
-	virtual Vector3 getPosition() = 0; 
+	Vector3 getPosition(); 
 	Vector3 setPosition(double in_x, double in_y, double in_z);
 	Vector3 setPosition(const Vector3 &pos);
 

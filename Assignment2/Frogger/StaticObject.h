@@ -3,7 +3,7 @@
 
 #include "GameObject.h"
 
-class StaticObject : GameObject
+class StaticObject : public GameObject
 {
 public:
 

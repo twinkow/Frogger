@@ -18,6 +18,8 @@
 #include <string>
 
 #include "shaderDemo.h"
+//#include "GameObject.h"
+#include "River.h"
 
 // include GLEW to access OpenGL 3.3 functions
 #include <GL/glew.h>
@@ -25,12 +27,11 @@
 // GLUT is the toolkit to interface with the OS
 #include <GL/freeglut.h>
 
-// Use Very Simple Libs
-#include "VSMathlib.h"
-#include "VSShaderlib.h"
-
 VSMathLib *vsml;
 VSShaderLib shader;
+
+River river;
+
 
 // Window width / height
 float ratio;
@@ -72,17 +73,6 @@ GLuint vao;
 
 int random;
 
-// COLORS
-float blue[4] = {0.0f, 0.0f, 0.5f, 1.0f};
-float water[4] = {0.0f, 0.0f, 1.0f, 1.0f};
-float grass[4] = {0.1f, 0.8f, 0.1f, 1.0f};
-float frog[4] = {0.0f, 0.5f, 0.0f, 1.0f};
-float street[4] = {0.5f, 0.5f, 0.5f, 1.0f};
-float black[4] = {0.0f, 0.0f, 0.0f, 1.0f};
-float white[4] = {1.0f, 1.0f, 1.0f, 1.0f};
-float brown[4] = {0.4f, 0.2f, 0.0f, 1.0f};
-float red[4] = {1.0f, 0.0f, 0.0f, 1.0f};
-float yellow[4] = {1.0f, 0.8f, 0.0f, 1.0f};
 // ------------------------------------------------------------
 //
 // Reshape Callback Function
@@ -106,389 +96,381 @@ void changeSize(int w, int h) {
 //
 // Render stuff
 //
-void drawRiver()
-{
-	// Margem central
-	vsml->pushMatrix(VSMathLib::MODEL);
-	shader.setUniform("color", grass);
-	vsml->scale(VSMathLib::MODEL, 14.0f, 0.6f, 1.0f);
-	vsml->matricesToGL();
-	glDrawElements(GL_TRIANGLES, faceCount*3, GL_UNSIGNED_INT, 0); 
-	vsml->popMatrix(VSMathLib::MODEL);
-
-	//Agua
-	vsml->pushMatrix(VSMathLib::MODEL);
-	shader.setUniform("color", water);
-	vsml->translate(VSMathLib::MODEL, 0.0f, 0.0f, -4.0f);
-	vsml->scale(VSMathLib::MODEL, 14.0f, 0.5f, 7.0f);
-	// send matrices to uniform buffer
-	vsml->matricesToGL();
-	glDrawElements(GL_TRIANGLES, faceCount*3, GL_UNSIGNED_INT, 0);
-	vsml->popMatrix(VSMathLib::MODEL);
-
-	//Margem final
-	vsml->pushMatrix(VSMathLib::MODEL);
-	shader.setUniform("color", grass);
-	vsml->translate(VSMathLib::MODEL, 0.0f, 0.0f, -8.0f);
-	vsml->scale(VSMathLib::MODEL, 14.0f, 0.6f, 1.0f);
-	vsml->matricesToGL();
-	glDrawElements(GL_TRIANGLES, faceCount*3, GL_UNSIGNED_INT, 0); 
-	vsml->popMatrix(VSMathLib::MODEL);
-}
-
-void drawStreet()
-{
-	//Estrada
-	vsml->pushMatrix(VSMathLib::MODEL);
-	shader.setUniform("color", street);
-	vsml->translate(VSMathLib::MODEL, 0.0f, 0.0f, 4.0f);
-	vsml->scale(VSMathLib::MODEL, 14.0f, 0.5f, 7.0f);
-	// send matrices to uniform buffer
-	vsml->matricesToGL();
-	glDrawElements(GL_TRIANGLES, faceCount*3, GL_UNSIGNED_INT, 0);
-	vsml->popMatrix(VSMathLib::MODEL);
-
-	// Passeio
-	vsml->pushMatrix(VSMathLib::MODEL);
-	shader.setUniform("color", black);
-	vsml->translate(VSMathLib::MODEL, 0.0f, 0.0f, 8.0f);
-	vsml->scale(VSMathLib::MODEL, 14.0f, 0.6f, 1.0f);
-	vsml->matricesToGL();
-	glDrawElements(GL_TRIANGLES, faceCount*3, GL_UNSIGNED_INT, 0); 
-	vsml->popMatrix(VSMathLib::MODEL);
-}
-
-void drawFrog()
-{
-	//Cabeça
-	vsml->pushMatrix(VSMathLib::MODEL);
-	shader.setUniform("color", frog);
-	vsml->translate(VSMathLib::MODEL, moveX, 0.75f, moveZ);
-	vsml->scale(VSMathLib::MODEL, 0.5f, 0.5f, 0.5f);
-	vsml->matricesToGL();
-	glDrawElements(GL_TRIANGLES, faceCount*3, GL_UNSIGNED_INT, 0); 
-	vsml->popMatrix(VSMathLib::MODEL);
-
-	//Corpo
-	vsml->pushMatrix(VSMathLib::MODEL);
-	shader.setUniform("color", frog);
-	vsml->translate(VSMathLib::MODEL, moveX, 0.8f, moveZ + 0.5f);
-	vsml->matricesToGL();
-	glDrawElements(GL_TRIANGLES, faceCount*3, GL_UNSIGNED_INT, 0); 
-	vsml->popMatrix(VSMathLib::MODEL);
-}
-
-void drawLogCima()
-{
-	//Tronco
-	vsml->pushMatrix(VSMathLib::MODEL);
-	shader.setUniform("color", brown);
-	vsml->translate(VSMathLib::MODEL, startPosLog, 0.5f, -5.0f);
-	vsml->scale(VSMathLib::MODEL, 2.0f, 0.5f, 1.0f);
-	vsml->matricesToGL();
-	glDrawElements(GL_TRIANGLES, faceCount*3, GL_UNSIGNED_INT, 0); 
-	vsml->popMatrix(VSMathLib::MODEL);
-}
-
-void drawLogBaixo()
-{
-	//Tronco
-	vsml->pushMatrix(VSMathLib::MODEL);
-	shader.setUniform("color", brown);
-	vsml->translate(VSMathLib::MODEL, startPosLog, 0.5f, -3.5f);
-	vsml->scale(VSMathLib::MODEL, 2.0f, 0.5f, 1.0f);
-	vsml->matricesToGL();
-	glDrawElements(GL_TRIANGLES, faceCount * 3, GL_UNSIGNED_INT, 0);
-	vsml->popMatrix(VSMathLib::MODEL);
-}
-
-void drawCarCima()
-{
-	//Carro Cima
-	vsml->pushMatrix(VSMathLib::MODEL);
-	shader.setUniform("color", red);
-	vsml->translate(VSMathLib::MODEL, startPosCar, 1.0f, 3.0f);
-	vsml->scale(VSMathLib::MODEL, 2.0f, 1.0f, 1.0f);
-	vsml->matricesToGL();
-	glDrawElements(GL_TRIANGLES, faceCount*3, GL_UNSIGNED_INT, 0); 
-	vsml->popMatrix(VSMathLib::MODEL);
-
-	//Roda FE
-	vsml->pushMatrix(VSMathLib::MODEL);
-	shader.setUniform("color", black);
-	vsml->translate(VSMathLib::MODEL, startPosCar + 0.4f, 0.5f, 2.5f);
-	vsml->scale(VSMathLib::MODEL, 0.5f, 0.5f, 0.5f);
-	vsml->matricesToGL();
-	glDrawElements(GL_TRIANGLES, faceCount*3, GL_UNSIGNED_INT, 0); 
-	vsml->popMatrix(VSMathLib::MODEL);
-
-	//Roda FD
-	vsml->pushMatrix(VSMathLib::MODEL);
-	shader.setUniform("color", black);
-	vsml->translate(VSMathLib::MODEL, startPosCar + 0.4f, 0.5f, 3.5f);
-	vsml->scale(VSMathLib::MODEL, 0.5f, 0.5f, 0.5f);
-	vsml->matricesToGL();
-	glDrawElements(GL_TRIANGLES, faceCount*3, GL_UNSIGNED_INT, 0); 
-	vsml->popMatrix(VSMathLib::MODEL);
-
-	//Roda TE
-	vsml->pushMatrix(VSMathLib::MODEL);
-	shader.setUniform("color", black);
-	vsml->translate(VSMathLib::MODEL, startPosCar - 0.6f, 0.5f, 2.5f);
-	vsml->scale(VSMathLib::MODEL, 0.5f, 0.5f, 0.5f);
-	vsml->matricesToGL();
-	glDrawElements(GL_TRIANGLES, faceCount*3, GL_UNSIGNED_INT, 0); 
-	vsml->popMatrix(VSMathLib::MODEL);
-
-	//Roda TD
-	vsml->pushMatrix(VSMathLib::MODEL);
-	shader.setUniform("color", black);
-	vsml->translate(VSMathLib::MODEL, startPosCar - 0.6f, 0.5f, 3.5f);
-	vsml->scale(VSMathLib::MODEL, 0.5f, 0.5f, 0.5f);
-	vsml->matricesToGL();
-	glDrawElements(GL_TRIANGLES, faceCount*3, GL_UNSIGNED_INT, 0); 
-	vsml->popMatrix(VSMathLib::MODEL);
-}
-
-void drawCarBaixo()
-{
-	//Carro Cima
-	vsml->pushMatrix(VSMathLib::MODEL);
-	shader.setUniform("color", red);
-	vsml->translate(VSMathLib::MODEL, startPosCar, 1.0f, 6.5f);
-	vsml->scale(VSMathLib::MODEL, 2.0f, 1.0f, 1.0f);
-	vsml->matricesToGL();
-	glDrawElements(GL_TRIANGLES, faceCount * 3, GL_UNSIGNED_INT, 0);
-	vsml->popMatrix(VSMathLib::MODEL);
-
-	//Roda FE
-	vsml->pushMatrix(VSMathLib::MODEL);
-	shader.setUniform("color", black);
-	vsml->translate(VSMathLib::MODEL, startPosCar + 0.4f, 0.5f, 6.0f);
-	vsml->scale(VSMathLib::MODEL, 0.5f, 0.5f, 0.5f);
-	vsml->matricesToGL();
-	glDrawElements(GL_TRIANGLES, faceCount * 3, GL_UNSIGNED_INT, 0);
-	vsml->popMatrix(VSMathLib::MODEL);
-
-	//Roda FD
-	vsml->pushMatrix(VSMathLib::MODEL);
-	shader.setUniform("color", black);
-	vsml->translate(VSMathLib::MODEL, startPosCar + 0.4f, 0.5f, 7.0f);
-	vsml->scale(VSMathLib::MODEL, 0.5f, 0.5f, 0.5f);
-	vsml->matricesToGL();
-	glDrawElements(GL_TRIANGLES, faceCount * 3, GL_UNSIGNED_INT, 0);
-	vsml->popMatrix(VSMathLib::MODEL);
-
-	//Roda TE
-	vsml->pushMatrix(VSMathLib::MODEL);
-	shader.setUniform("color", black);
-	vsml->translate(VSMathLib::MODEL, startPosCar - 0.6f, 0.5f, 6.0f);
-	vsml->scale(VSMathLib::MODEL, 0.5f, 0.5f, 0.5f);
-	vsml->matricesToGL();
-	glDrawElements(GL_TRIANGLES, faceCount * 3, GL_UNSIGNED_INT, 0);
-	vsml->popMatrix(VSMathLib::MODEL);
-
-	//Roda TD
-	vsml->pushMatrix(VSMathLib::MODEL);
-	shader.setUniform("color", black);
-	vsml->translate(VSMathLib::MODEL, startPosCar - 0.6f, 0.5f, 7.0f);
-	vsml->scale(VSMathLib::MODEL, 0.5f, 0.5f, 0.5f);
-	vsml->matricesToGL();
-	glDrawElements(GL_TRIANGLES, faceCount * 3, GL_UNSIGNED_INT, 0);
-	vsml->popMatrix(VSMathLib::MODEL);
-}
-
-void drawBusCima()
-{
-	//Autobus
-	vsml->pushMatrix(VSMathLib::MODEL);
-	shader.setUniform("color", blue);
-	vsml->translate(VSMathLib::MODEL, startPosBus, 1.0f, 1.5f);
-	vsml->scale(VSMathLib::MODEL, 4.0f, 2.0f, 1.0f);
-	vsml->matricesToGL();
-	glDrawElements(GL_TRIANGLES, faceCount * 3, GL_UNSIGNED_INT, 0);
-	vsml->popMatrix(VSMathLib::MODEL);
-
-	//Roda FE
-	vsml->pushMatrix(VSMathLib::MODEL);
-	shader.setUniform("color", black);
-	vsml->translate(VSMathLib::MODEL, startPosBus + 0.9f, 0.5f, 1.0f);
-	vsml->scale(VSMathLib::MODEL, 0.5f, 0.5f, 0.5f);
-	vsml->matricesToGL();
-	glDrawElements(GL_TRIANGLES, faceCount * 3, GL_UNSIGNED_INT, 0);
-	vsml->popMatrix(VSMathLib::MODEL);
-
-	//Roda FD
-	vsml->pushMatrix(VSMathLib::MODEL);
-	shader.setUniform("color", black);
-	vsml->translate(VSMathLib::MODEL, startPosBus + 0.9f, 0.5f, 2.0f);
-	vsml->scale(VSMathLib::MODEL, 0.5f, 0.5f, 0.5f);
-	vsml->matricesToGL();
-	glDrawElements(GL_TRIANGLES, faceCount * 3, GL_UNSIGNED_INT, 0);
-	vsml->popMatrix(VSMathLib::MODEL);
-
-	//Roda TE
-	vsml->pushMatrix(VSMathLib::MODEL);
-	shader.setUniform("color", black);
-	vsml->translate(VSMathLib::MODEL, startPosBus - 1.1f, 0.5f, 1.0f);
-	vsml->scale(VSMathLib::MODEL, 0.5f, 0.5f, 0.5f);
-	vsml->matricesToGL();
-	glDrawElements(GL_TRIANGLES, faceCount * 3, GL_UNSIGNED_INT, 0);
-	vsml->popMatrix(VSMathLib::MODEL);
-
-	//Roda TD
-	vsml->pushMatrix(VSMathLib::MODEL);
-	shader.setUniform("color", black);
-	vsml->translate(VSMathLib::MODEL, startPosBus - 1.1f, 0.5f, 2.0f);
-	vsml->scale(VSMathLib::MODEL, 0.5f, 0.5f, 0.5f);
-	vsml->matricesToGL();
-	glDrawElements(GL_TRIANGLES, faceCount * 3, GL_UNSIGNED_INT, 0);
-	vsml->popMatrix(VSMathLib::MODEL);
-}
-
-void drawBusBaixo()
-{
-	//Autobus
-	vsml->pushMatrix(VSMathLib::MODEL);
-	shader.setUniform("color", blue);
-	vsml->translate(VSMathLib::MODEL, startPosBus, 1.0f, 5.0f);
-	vsml->scale(VSMathLib::MODEL, 4.0f, 2.0f, 1.0f);
-	vsml->matricesToGL();
-	glDrawElements(GL_TRIANGLES, faceCount*3, GL_UNSIGNED_INT, 0); 
-	vsml->popMatrix(VSMathLib::MODEL);
-
-	//Roda FE
-	vsml->pushMatrix(VSMathLib::MODEL);
-	shader.setUniform("color", black);
-	vsml->translate(VSMathLib::MODEL, startPosBus + 0.9f, 0.5f, 4.5f);
-	vsml->scale(VSMathLib::MODEL, 0.5f, 0.5f, 0.5f);
-	vsml->matricesToGL();
-	glDrawElements(GL_TRIANGLES, faceCount*3, GL_UNSIGNED_INT, 0); 
-	vsml->popMatrix(VSMathLib::MODEL);
-
-	//Roda FD
-	vsml->pushMatrix(VSMathLib::MODEL);
-	shader.setUniform("color", black);
-	vsml->translate(VSMathLib::MODEL, startPosBus + 0.9f, 0.5f, 5.5f);
-	vsml->scale(VSMathLib::MODEL, 0.5f, 0.5f, 0.5f);
-	vsml->matricesToGL();
-	glDrawElements(GL_TRIANGLES, faceCount*3, GL_UNSIGNED_INT, 0); 
-	vsml->popMatrix(VSMathLib::MODEL);
-
-	//Roda TE
-	vsml->pushMatrix(VSMathLib::MODEL);
-	shader.setUniform("color", black);
-	vsml->translate(VSMathLib::MODEL, startPosBus - 1.1f, 0.5f, 4.5f);
-	vsml->scale(VSMathLib::MODEL, 0.5f, 0.5f, 0.5f);
-	vsml->matricesToGL();
-	glDrawElements(GL_TRIANGLES, faceCount*3, GL_UNSIGNED_INT, 0); 
-	vsml->popMatrix(VSMathLib::MODEL);
-
-	//Roda TD
-	vsml->pushMatrix(VSMathLib::MODEL);
-	shader.setUniform("color", black);
-	vsml->translate(VSMathLib::MODEL, startPosBus - 1.1f, 0.5f, 5.5f);
-	vsml->scale(VSMathLib::MODEL, 0.5f, 0.5f, 0.5f);
-	vsml->matricesToGL();
-	glDrawElements(GL_TRIANGLES, faceCount*3, GL_UNSIGNED_INT, 0); 
-	vsml->popMatrix(VSMathLib::MODEL);
-}
-
-void drawTurtleCima()
-{
-	//Corpo tartaruga
-	vsml->pushMatrix(VSMathLib::MODEL);
-	shader.setUniform("color", grass);
-	vsml->translate(VSMathLib::MODEL, startPosTurtle, 1.0f, -6.5f);
-	vsml->scale(VSMathLib::MODEL, 1.0f, 1.0f, 1.0f);
-	vsml->matricesToGL();
-	glDrawElements(GL_TRIANGLES, faceCount * 3, GL_UNSIGNED_INT, 0);
-	vsml->popMatrix(VSMathLib::MODEL);
-
-	//Pata FE
-	vsml->pushMatrix(VSMathLib::MODEL);
-	shader.setUniform("color", yellow);
-	vsml->translate(VSMathLib::MODEL, startPosTurtle + 0.5f, 0.5f, -7.0f);
-	vsml->scale(VSMathLib::MODEL, 0.5f, 0.5f, 0.5f);
-	vsml->matricesToGL();
-	glDrawElements(GL_TRIANGLES, faceCount * 3, GL_UNSIGNED_INT, 0);
-	vsml->popMatrix(VSMathLib::MODEL);
-
-	//Pata FD
-	vsml->pushMatrix(VSMathLib::MODEL);
-	shader.setUniform("color", yellow);
-	vsml->translate(VSMathLib::MODEL, startPosTurtle + 0.5f, 0.5f, -6.0f);
-	vsml->scale(VSMathLib::MODEL, 0.5f, 0.5f, 0.5f);
-	vsml->matricesToGL();
-	glDrawElements(GL_TRIANGLES, faceCount * 3, GL_UNSIGNED_INT, 0);
-	vsml->popMatrix(VSMathLib::MODEL);
-
-	//Pata TE
-	vsml->pushMatrix(VSMathLib::MODEL);
-	shader.setUniform("color", yellow);
-	vsml->translate(VSMathLib::MODEL, startPosTurtle - 0.5f, 0.5f, -7.0f);
-	vsml->scale(VSMathLib::MODEL, 0.5f, 0.5f, 0.5f);
-	vsml->matricesToGL();
-	glDrawElements(GL_TRIANGLES, faceCount * 3, GL_UNSIGNED_INT, 0);
-	vsml->popMatrix(VSMathLib::MODEL);
-
-	//Pata TD
-	vsml->pushMatrix(VSMathLib::MODEL);
-	shader.setUniform("color", yellow);
-	vsml->translate(VSMathLib::MODEL, startPosTurtle - 0.5f, 0.5f, -6.0f);
-	vsml->scale(VSMathLib::MODEL, 0.5f, 0.5f, 0.5f);
-	vsml->matricesToGL();
-	glDrawElements(GL_TRIANGLES, faceCount * 3, GL_UNSIGNED_INT, 0);
-	vsml->popMatrix(VSMathLib::MODEL);
-}
-
-void drawTurtleBaixo()
-{
-	//Corpo tartaruga
-	vsml->pushMatrix(VSMathLib::MODEL);
-	shader.setUniform("color", grass);
-	vsml->translate(VSMathLib::MODEL, startPosTurtle, 1.0f, -2.0f);
-	vsml->scale(VSMathLib::MODEL, 1.0f, 1.0f, 1.0f);
-	vsml->matricesToGL();
-	glDrawElements(GL_TRIANGLES, faceCount*3, GL_UNSIGNED_INT, 0);
-	vsml->popMatrix(VSMathLib::MODEL);
-
-	//Pata FE
-	vsml->pushMatrix(VSMathLib::MODEL);
-	shader.setUniform("color", yellow);
-	vsml->translate(VSMathLib::MODEL, startPosTurtle + 0.5f, 0.5f, -2.5f);
-	vsml->scale(VSMathLib::MODEL, 0.5f, 0.5f, 0.5f);
-	vsml->matricesToGL();
-	glDrawElements(GL_TRIANGLES, faceCount*3, GL_UNSIGNED_INT, 0);
-	vsml->popMatrix(VSMathLib::MODEL);
-
-	//Pata FD
-	vsml->pushMatrix(VSMathLib::MODEL);
-	shader.setUniform("color", yellow);
-	vsml->translate(VSMathLib::MODEL, startPosTurtle + 0.5f, 0.5f, -1.5f);
-	vsml->scale(VSMathLib::MODEL, 0.5f, 0.5f, 0.5f);
-	vsml->matricesToGL();
-	glDrawElements(GL_TRIANGLES, faceCount*3, GL_UNSIGNED_INT, 0);
-	vsml->popMatrix(VSMathLib::MODEL);
-
-	//Pata TE
-	vsml->pushMatrix(VSMathLib::MODEL);
-	shader.setUniform("color", yellow);
-	vsml->translate(VSMathLib::MODEL, startPosTurtle - 0.5f, 0.5f, -2.5f);
-	vsml->scale(VSMathLib::MODEL, 0.5f, 0.5f, 0.5f);
-	vsml->matricesToGL();
-	glDrawElements(GL_TRIANGLES, faceCount*3, GL_UNSIGNED_INT, 0);
-	vsml->popMatrix(VSMathLib::MODEL);
-
-	//Pata TD
-	vsml->pushMatrix(VSMathLib::MODEL);
-	shader.setUniform("color", yellow);
-	vsml->translate(VSMathLib::MODEL, startPosTurtle - 0.5f, 0.5f, -1.5f);
-	vsml->scale(VSMathLib::MODEL, 0.5f, 0.5f, 0.5f);
-	vsml->matricesToGL();
-	glDrawElements(GL_TRIANGLES, faceCount*3, GL_UNSIGNED_INT, 0);
-	vsml->popMatrix(VSMathLib::MODEL);
-}
+//void drawRiver()
+//{
+//	// Margem central
+//	vsml->pushMatrix(VSMathLib::MODEL);
+//	shader.setUniform("color", grass);
+//	vsml->scale(VSMathLib::MODEL, 14.0f, 0.6f, 1.0f);
+//	vsml->matricesToGL();
+//	glDrawElements(GL_TRIANGLES, faceCount*3, GL_UNSIGNED_INT, 0); 
+//	vsml->popMatrix(VSMathLib::MODEL);
+//
+//
+//
+//	//Margem final
+//	vsml->pushMatrix(VSMathLib::MODEL);
+//	shader.setUniform("color", grass);
+//	vsml->translate(VSMathLib::MODEL, 0.0f, 0.0f, -8.0f);
+//	vsml->scale(VSMathLib::MODEL, 14.0f, 0.6f, 1.0f);
+//	vsml->matricesToGL();
+//	glDrawElements(GL_TRIANGLES, faceCount*3, GL_UNSIGNED_INT, 0); 
+//	vsml->popMatrix(VSMathLib::MODEL);
+//}
+//
+//void drawStreet()
+//{
+//	//Estrada
+//	vsml->pushMatrix(VSMathLib::MODEL);
+//	shader.setUniform("color", street);
+//	vsml->translate(VSMathLib::MODEL, 0.0f, 0.0f, 4.0f);
+//	vsml->scale(VSMathLib::MODEL, 14.0f, 0.5f, 7.0f);
+//	// send matrices to uniform buffer
+//	vsml->matricesToGL();
+//	glDrawElements(GL_TRIANGLES, faceCount*3, GL_UNSIGNED_INT, 0);
+//	vsml->popMatrix(VSMathLib::MODEL);
+//
+//	// Passeio
+//	vsml->pushMatrix(VSMathLib::MODEL);
+//	shader.setUniform("color", black);
+//	vsml->translate(VSMathLib::MODEL, 0.0f, 0.0f, 8.0f);
+//	vsml->scale(VSMathLib::MODEL, 14.0f, 0.6f, 1.0f);
+//	vsml->matricesToGL();
+//	glDrawElements(GL_TRIANGLES, faceCount*3, GL_UNSIGNED_INT, 0); 
+//	vsml->popMatrix(VSMathLib::MODEL);
+//}
+//
+//void drawFrog()
+//{
+//	//Cabeça
+//	vsml->pushMatrix(VSMathLib::MODEL);
+//	shader.setUniform("color", frog);
+//	vsml->translate(VSMathLib::MODEL, moveX, 0.75f, moveZ);
+//	vsml->scale(VSMathLib::MODEL, 0.5f, 0.5f, 0.5f);
+//	vsml->matricesToGL();
+//	glDrawElements(GL_TRIANGLES, faceCount*3, GL_UNSIGNED_INT, 0); 
+//	vsml->popMatrix(VSMathLib::MODEL);
+//
+//	//Corpo
+//	vsml->pushMatrix(VSMathLib::MODEL);
+//	shader.setUniform("color", frog);
+//	vsml->translate(VSMathLib::MODEL, moveX, 0.8f, moveZ + 0.5f);
+//	vsml->matricesToGL();
+//	glDrawElements(GL_TRIANGLES, faceCount*3, GL_UNSIGNED_INT, 0); 
+//	vsml->popMatrix(VSMathLib::MODEL);
+//}
+//
+//void drawLogCima()
+//{
+//	//Tronco
+//	vsml->pushMatrix(VSMathLib::MODEL);
+//	shader.setUniform("color", brown);
+//	vsml->translate(VSMathLib::MODEL, startPosLog, 0.5f, -5.0f);
+//	vsml->scale(VSMathLib::MODEL, 2.0f, 0.5f, 1.0f);
+//	vsml->matricesToGL();
+//	glDrawElements(GL_TRIANGLES, faceCount*3, GL_UNSIGNED_INT, 0); 
+//	vsml->popMatrix(VSMathLib::MODEL);
+//}
+//
+//void drawLogBaixo()
+//{
+//	//Tronco
+//	vsml->pushMatrix(VSMathLib::MODEL);
+//	shader.setUniform("color", brown);
+//	vsml->translate(VSMathLib::MODEL, startPosLog, 0.5f, -3.5f);
+//	vsml->scale(VSMathLib::MODEL, 2.0f, 0.5f, 1.0f);
+//	vsml->matricesToGL();
+//	glDrawElements(GL_TRIANGLES, faceCount * 3, GL_UNSIGNED_INT, 0);
+//	vsml->popMatrix(VSMathLib::MODEL);
+//}
+//
+//void drawCarCima()
+//{
+//	//Carro Cima
+//	vsml->pushMatrix(VSMathLib::MODEL);
+//	shader.setUniform("color", red);
+//	vsml->translate(VSMathLib::MODEL, startPosCar, 1.0f, 3.0f);
+//	vsml->scale(VSMathLib::MODEL, 2.0f, 1.0f, 1.0f);
+//	vsml->matricesToGL();
+//	glDrawElements(GL_TRIANGLES, faceCount*3, GL_UNSIGNED_INT, 0); 
+//	vsml->popMatrix(VSMathLib::MODEL);
+//
+//	//Roda FE
+//	vsml->pushMatrix(VSMathLib::MODEL);
+//	shader.setUniform("color", black);
+//	vsml->translate(VSMathLib::MODEL, startPosCar + 0.4f, 0.5f, 2.5f);
+//	vsml->scale(VSMathLib::MODEL, 0.5f, 0.5f, 0.5f);
+//	vsml->matricesToGL();
+//	glDrawElements(GL_TRIANGLES, faceCount*3, GL_UNSIGNED_INT, 0); 
+//	vsml->popMatrix(VSMathLib::MODEL);
+//
+//	//Roda FD
+//	vsml->pushMatrix(VSMathLib::MODEL);
+//	shader.setUniform("color", black);
+//	vsml->translate(VSMathLib::MODEL, startPosCar + 0.4f, 0.5f, 3.5f);
+//	vsml->scale(VSMathLib::MODEL, 0.5f, 0.5f, 0.5f);
+//	vsml->matricesToGL();
+//	glDrawElements(GL_TRIANGLES, faceCount*3, GL_UNSIGNED_INT, 0); 
+//	vsml->popMatrix(VSMathLib::MODEL);
+//
+//	//Roda TE
+//	vsml->pushMatrix(VSMathLib::MODEL);
+//	shader.setUniform("color", black);
+//	vsml->translate(VSMathLib::MODEL, startPosCar - 0.6f, 0.5f, 2.5f);
+//	vsml->scale(VSMathLib::MODEL, 0.5f, 0.5f, 0.5f);
+//	vsml->matricesToGL();
+//	glDrawElements(GL_TRIANGLES, faceCount*3, GL_UNSIGNED_INT, 0); 
+//	vsml->popMatrix(VSMathLib::MODEL);
+//
+//	//Roda TD
+//	vsml->pushMatrix(VSMathLib::MODEL);
+//	shader.setUniform("color", black);
+//	vsml->translate(VSMathLib::MODEL, startPosCar - 0.6f, 0.5f, 3.5f);
+//	vsml->scale(VSMathLib::MODEL, 0.5f, 0.5f, 0.5f);
+//	vsml->matricesToGL();
+//	glDrawElements(GL_TRIANGLES, faceCount*3, GL_UNSIGNED_INT, 0); 
+//	vsml->popMatrix(VSMathLib::MODEL);
+//}
+//
+//void drawCarBaixo()
+//{
+//	//Carro Cima
+//	vsml->pushMatrix(VSMathLib::MODEL);
+//	shader.setUniform("color", red);
+//	vsml->translate(VSMathLib::MODEL, startPosCar, 1.0f, 6.5f);
+//	vsml->scale(VSMathLib::MODEL, 2.0f, 1.0f, 1.0f);
+//	vsml->matricesToGL();
+//	glDrawElements(GL_TRIANGLES, faceCount * 3, GL_UNSIGNED_INT, 0);
+//	vsml->popMatrix(VSMathLib::MODEL);
+//
+//	//Roda FE
+//	vsml->pushMatrix(VSMathLib::MODEL);
+//	shader.setUniform("color", black);
+//	vsml->translate(VSMathLib::MODEL, startPosCar + 0.4f, 0.5f, 6.0f);
+//	vsml->scale(VSMathLib::MODEL, 0.5f, 0.5f, 0.5f);
+//	vsml->matricesToGL();
+//	glDrawElements(GL_TRIANGLES, faceCount * 3, GL_UNSIGNED_INT, 0);
+//	vsml->popMatrix(VSMathLib::MODEL);
+//
+//	//Roda FD
+//	vsml->pushMatrix(VSMathLib::MODEL);
+//	shader.setUniform("color", black);
+//	vsml->translate(VSMathLib::MODEL, startPosCar + 0.4f, 0.5f, 7.0f);
+//	vsml->scale(VSMathLib::MODEL, 0.5f, 0.5f, 0.5f);
+//	vsml->matricesToGL();
+//	glDrawElements(GL_TRIANGLES, faceCount * 3, GL_UNSIGNED_INT, 0);
+//	vsml->popMatrix(VSMathLib::MODEL);
+//
+//	//Roda TE
+//	vsml->pushMatrix(VSMathLib::MODEL);
+//	shader.setUniform("color", black);
+//	vsml->translate(VSMathLib::MODEL, startPosCar - 0.6f, 0.5f, 6.0f);
+//	vsml->scale(VSMathLib::MODEL, 0.5f, 0.5f, 0.5f);
+//	vsml->matricesToGL();
+//	glDrawElements(GL_TRIANGLES, faceCount * 3, GL_UNSIGNED_INT, 0);
+//	vsml->popMatrix(VSMathLib::MODEL);
+//
+//	//Roda TD
+//	vsml->pushMatrix(VSMathLib::MODEL);
+//	shader.setUniform("color", black);
+//	vsml->translate(VSMathLib::MODEL, startPosCar - 0.6f, 0.5f, 7.0f);
+//	vsml->scale(VSMathLib::MODEL, 0.5f, 0.5f, 0.5f);
+//	vsml->matricesToGL();
+//	glDrawElements(GL_TRIANGLES, faceCount * 3, GL_UNSIGNED_INT, 0);
+//	vsml->popMatrix(VSMathLib::MODEL);
+//}
+//
+//void drawBusCima()
+//{
+//	//Autobus
+//	vsml->pushMatrix(VSMathLib::MODEL);
+//	shader.setUniform("color", blue);
+//	vsml->translate(VSMathLib::MODEL, startPosBus, 1.0f, 1.5f);
+//	vsml->scale(VSMathLib::MODEL, 4.0f, 2.0f, 1.0f);
+//	vsml->matricesToGL();
+//	glDrawElements(GL_TRIANGLES, faceCount * 3, GL_UNSIGNED_INT, 0);
+//	vsml->popMatrix(VSMathLib::MODEL);
+//
+//	//Roda FE
+//	vsml->pushMatrix(VSMathLib::MODEL);
+//	shader.setUniform("color", black);
+//	vsml->translate(VSMathLib::MODEL, startPosBus + 0.9f, 0.5f, 1.0f);
+//	vsml->scale(VSMathLib::MODEL, 0.5f, 0.5f, 0.5f);
+//	vsml->matricesToGL();
+//	glDrawElements(GL_TRIANGLES, faceCount * 3, GL_UNSIGNED_INT, 0);
+//	vsml->popMatrix(VSMathLib::MODEL);
+//
+//	//Roda FD
+//	vsml->pushMatrix(VSMathLib::MODEL);
+//	shader.setUniform("color", black);
+//	vsml->translate(VSMathLib::MODEL, startPosBus + 0.9f, 0.5f, 2.0f);
+//	vsml->scale(VSMathLib::MODEL, 0.5f, 0.5f, 0.5f);
+//	vsml->matricesToGL();
+//	glDrawElements(GL_TRIANGLES, faceCount * 3, GL_UNSIGNED_INT, 0);
+//	vsml->popMatrix(VSMathLib::MODEL);
+//
+//	//Roda TE
+//	vsml->pushMatrix(VSMathLib::MODEL);
+//	shader.setUniform("color", black);
+//	vsml->translate(VSMathLib::MODEL, startPosBus - 1.1f, 0.5f, 1.0f);
+//	vsml->scale(VSMathLib::MODEL, 0.5f, 0.5f, 0.5f);
+//	vsml->matricesToGL();
+//	glDrawElements(GL_TRIANGLES, faceCount * 3, GL_UNSIGNED_INT, 0);
+//	vsml->popMatrix(VSMathLib::MODEL);
+//
+//	//Roda TD
+//	vsml->pushMatrix(VSMathLib::MODEL);
+//	shader.setUniform("color", black);
+//	vsml->translate(VSMathLib::MODEL, startPosBus - 1.1f, 0.5f, 2.0f);
+//	vsml->scale(VSMathLib::MODEL, 0.5f, 0.5f, 0.5f);
+//	vsml->matricesToGL();
+//	glDrawElements(GL_TRIANGLES, faceCount * 3, GL_UNSIGNED_INT, 0);
+//	vsml->popMatrix(VSMathLib::MODEL);
+//}
+//
+//void drawBusBaixo()
+//{
+//	//Autobus
+//	vsml->pushMatrix(VSMathLib::MODEL);
+//	shader.setUniform("color", blue);
+//	vsml->translate(VSMathLib::MODEL, startPosBus, 1.0f, 5.0f);
+//	vsml->scale(VSMathLib::MODEL, 4.0f, 2.0f, 1.0f);
+//	vsml->matricesToGL();
+//	glDrawElements(GL_TRIANGLES, faceCount*3, GL_UNSIGNED_INT, 0); 
+//	vsml->popMatrix(VSMathLib::MODEL);
+//
+//	//Roda FE
+//	vsml->pushMatrix(VSMathLib::MODEL);
+//	shader.setUniform("color", black);
+//	vsml->translate(VSMathLib::MODEL, startPosBus + 0.9f, 0.5f, 4.5f);
+//	vsml->scale(VSMathLib::MODEL, 0.5f, 0.5f, 0.5f);
+//	vsml->matricesToGL();
+//	glDrawElements(GL_TRIANGLES, faceCount*3, GL_UNSIGNED_INT, 0); 
+//	vsml->popMatrix(VSMathLib::MODEL);
+//
+//	//Roda FD
+//	vsml->pushMatrix(VSMathLib::MODEL);
+//	shader.setUniform("color", black);
+//	vsml->translate(VSMathLib::MODEL, startPosBus + 0.9f, 0.5f, 5.5f);
+//	vsml->scale(VSMathLib::MODEL, 0.5f, 0.5f, 0.5f);
+//	vsml->matricesToGL();
+//	glDrawElements(GL_TRIANGLES, faceCount*3, GL_UNSIGNED_INT, 0); 
+//	vsml->popMatrix(VSMathLib::MODEL);
+//
+//	//Roda TE
+//	vsml->pushMatrix(VSMathLib::MODEL);
+//	shader.setUniform("color", black);
+//	vsml->translate(VSMathLib::MODEL, startPosBus - 1.1f, 0.5f, 4.5f);
+//	vsml->scale(VSMathLib::MODEL, 0.5f, 0.5f, 0.5f);
+//	vsml->matricesToGL();
+//	glDrawElements(GL_TRIANGLES, faceCount*3, GL_UNSIGNED_INT, 0); 
+//	vsml->popMatrix(VSMathLib::MODEL);
+//
+//	//Roda TD
+//	vsml->pushMatrix(VSMathLib::MODEL);
+//	shader.setUniform("color", black);
+//	vsml->translate(VSMathLib::MODEL, startPosBus - 1.1f, 0.5f, 5.5f);
+//	vsml->scale(VSMathLib::MODEL, 0.5f, 0.5f, 0.5f);
+//	vsml->matricesToGL();
+//	glDrawElements(GL_TRIANGLES, faceCount*3, GL_UNSIGNED_INT, 0); 
+//	vsml->popMatrix(VSMathLib::MODEL);
+//}
+//
+//void drawTurtleCima()
+//{
+//	//Corpo tartaruga
+//	vsml->pushMatrix(VSMathLib::MODEL);
+//	shader.setUniform("color", grass);
+//	vsml->translate(VSMathLib::MODEL, startPosTurtle, 1.0f, -6.5f);
+//	vsml->scale(VSMathLib::MODEL, 1.0f, 1.0f, 1.0f);
+//	vsml->matricesToGL();
+//	glDrawElements(GL_TRIANGLES, faceCount * 3, GL_UNSIGNED_INT, 0);
+//	vsml->popMatrix(VSMathLib::MODEL);
+//
+//	//Pata FE
+//	vsml->pushMatrix(VSMathLib::MODEL);
+//	shader.setUniform("color", yellow);
+//	vsml->translate(VSMathLib::MODEL, startPosTurtle + 0.5f, 0.5f, -7.0f);
+//	vsml->scale(VSMathLib::MODEL, 0.5f, 0.5f, 0.5f);
+//	vsml->matricesToGL();
+//	glDrawElements(GL_TRIANGLES, faceCount * 3, GL_UNSIGNED_INT, 0);
+//	vsml->popMatrix(VSMathLib::MODEL);
+//
+//	//Pata FD
+//	vsml->pushMatrix(VSMathLib::MODEL);
+//	shader.setUniform("color", yellow);
+//	vsml->translate(VSMathLib::MODEL, startPosTurtle + 0.5f, 0.5f, -6.0f);
+//	vsml->scale(VSMathLib::MODEL, 0.5f, 0.5f, 0.5f);
+//	vsml->matricesToGL();
+//	glDrawElements(GL_TRIANGLES, faceCount * 3, GL_UNSIGNED_INT, 0);
+//	vsml->popMatrix(VSMathLib::MODEL);
+//
+//	//Pata TE
+//	vsml->pushMatrix(VSMathLib::MODEL);
+//	shader.setUniform("color", yellow);
+//	vsml->translate(VSMathLib::MODEL, startPosTurtle - 0.5f, 0.5f, -7.0f);
+//	vsml->scale(VSMathLib::MODEL, 0.5f, 0.5f, 0.5f);
+//	vsml->matricesToGL();
+//	glDrawElements(GL_TRIANGLES, faceCount * 3, GL_UNSIGNED_INT, 0);
+//	vsml->popMatrix(VSMathLib::MODEL);
+//
+//	//Pata TD
+//	vsml->pushMatrix(VSMathLib::MODEL);
+//	shader.setUniform("color", yellow);
+//	vsml->translate(VSMathLib::MODEL, startPosTurtle - 0.5f, 0.5f, -6.0f);
+//	vsml->scale(VSMathLib::MODEL, 0.5f, 0.5f, 0.5f);
+//	vsml->matricesToGL();
+//	glDrawElements(GL_TRIANGLES, faceCount * 3, GL_UNSIGNED_INT, 0);
+//	vsml->popMatrix(VSMathLib::MODEL);
+//}
+//
+//void drawTurtleBaixo()
+//{
+//	//Corpo tartaruga
+//	vsml->pushMatrix(VSMathLib::MODEL);
+//	shader.setUniform("color", grass);
+//	vsml->translate(VSMathLib::MODEL, startPosTurtle, 1.0f, -2.0f);
+//	vsml->scale(VSMathLib::MODEL, 1.0f, 1.0f, 1.0f);
+//	vsml->matricesToGL();
+//	glDrawElements(GL_TRIANGLES, faceCount*3, GL_UNSIGNED_INT, 0);
+//	vsml->popMatrix(VSMathLib::MODEL);
+//
+//	//Pata FE
+//	vsml->pushMatrix(VSMathLib::MODEL);
+//	shader.setUniform("color", yellow);
+//	vsml->translate(VSMathLib::MODEL, startPosTurtle + 0.5f, 0.5f, -2.5f);
+//	vsml->scale(VSMathLib::MODEL, 0.5f, 0.5f, 0.5f);
+//	vsml->matricesToGL();
+//	glDrawElements(GL_TRIANGLES, faceCount*3, GL_UNSIGNED_INT, 0);
+//	vsml->popMatrix(VSMathLib::MODEL);
+//
+//	//Pata FD
+//	vsml->pushMatrix(VSMathLib::MODEL);
+//	shader.setUniform("color", yellow);
+//	vsml->translate(VSMathLib::MODEL, startPosTurtle + 0.5f, 0.5f, -1.5f);
+//	vsml->scale(VSMathLib::MODEL, 0.5f, 0.5f, 0.5f);
+//	vsml->matricesToGL();
+//	glDrawElements(GL_TRIANGLES, faceCount*3, GL_UNSIGNED_INT, 0);
+//	vsml->popMatrix(VSMathLib::MODEL);
+//
+//	//Pata TE
+//	vsml->pushMatrix(VSMathLib::MODEL);
+//	shader.setUniform("color", yellow);
+//	vsml->translate(VSMathLib::MODEL, startPosTurtle - 0.5f, 0.5f, -2.5f);
+//	vsml->scale(VSMathLib::MODEL, 0.5f, 0.5f, 0.5f);
+//	vsml->matricesToGL();
+//	glDrawElements(GL_TRIANGLES, faceCount*3, GL_UNSIGNED_INT, 0);
+//	vsml->popMatrix(VSMathLib::MODEL);
+//
+//	//Pata TD
+//	vsml->pushMatrix(VSMathLib::MODEL);
+//	shader.setUniform("color", yellow);
+//	vsml->translate(VSMathLib::MODEL, startPosTurtle - 0.5f, 0.5f, -1.5f);
+//	vsml->scale(VSMathLib::MODEL, 0.5f, 0.5f, 0.5f);
+//	vsml->matricesToGL();
+//	glDrawElements(GL_TRIANGLES, faceCount*3, GL_UNSIGNED_INT, 0);
+//	vsml->popMatrix(VSMathLib::MODEL);
+//}
 
 
 void renderScene(void) {
@@ -523,29 +505,30 @@ void renderScene(void) {
 
 	/////////////////////////////////////////////////////////
 	glBindVertexArray(vao);
-	drawStreet();
-	drawRiver();
-	drawFrog();
-	if(random == 0)
-	{
-		drawLogCima();
-		drawCarCima();
-	}
-	else if(random == 1)
-	{
-			drawTurtleCima();
-			drawBusCima();
-	}
-	else if( random == 2)
-	{
-		drawLogBaixo();
-		drawBusBaixo();
-	}
-	else
-	{
-		drawTurtleBaixo();
-		drawCarBaixo();
-	}
+	river.draw(vsml, shader);
+	//drawStreet();
+	//drawRiver();
+	//drawFrog();
+	//if(random == 0)
+	//{
+	//	drawLogCima();
+	//	drawCarCima();
+	//}
+	//else if(random == 1)
+	//{
+	//		drawTurtleCima();
+	//		drawBusCima();
+	//}
+	//else if( random == 2)
+	//{
+	//	drawLogBaixo();
+	//	drawBusBaixo();
+	//}
+	//else
+	//{
+	//	drawTurtleBaixo();
+	//	drawCarBaixo();
+	//}
 
 	/////////////////////////////////////////////////////////
 

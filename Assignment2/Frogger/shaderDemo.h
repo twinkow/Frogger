@@ -1,8 +1,5 @@
+#pragma once
 
-
-
-int verticeCount = 24;
-int faceCount = 12;
 
 float colors[] = 
 {

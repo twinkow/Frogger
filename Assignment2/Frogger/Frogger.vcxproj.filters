@@ -141,6 +141,7 @@
     <ClInclude Include="vsShaderLib.h">
       <Filter>Shaders</Filter>
     </ClInclude>
+    <ClInclude Include="DrawComponents.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="shaders\helloWorld.frag">
