@@ -5,7 +5,7 @@ Vector4::Vector4() : Vector3(), _w(1) {};
 
 Vector4::Vector4(double in_x, double in_y, double in_z, double in_w) : Vector3(in_x, in_y, in_z), _w(in_w) {};
 
-double Vector4::getW(){ return _w; }
+double Vector4::getW() const{ return _w; }
 
 void Vector4::set(double in_x, double in_y, double in_z, double in_w) { Vector3::set(in_x, in_y, in_z), _w = in_w;}
 

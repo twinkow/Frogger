@@ -14,9 +14,9 @@ public:
 	Vector3(double in_x, double in_y, double in_z);
 	~Vector3();
 
-	double getX(); 
-	double getY(); 
-	double getZ();
+	double getX() const; 
+	double getY() const; 
+	double getZ() const;
 
 	void set(double in_x, double in_y, double in_z);
 

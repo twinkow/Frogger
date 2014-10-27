@@ -15,7 +15,7 @@ private:
 	Vector3 _direction;
 
 	double _cut_off;
-	double _expoent;
+	double _exponent;
 
 	// ver num
 

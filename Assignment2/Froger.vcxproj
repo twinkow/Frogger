@@ -79,18 +79,57 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Frogger\Bus.h" />
     <ClInclude Include="Frogger\Camera.h" />
+    <ClInclude Include="Frogger\Car.h" />
+    <ClInclude Include="Frogger\DynamicObject.h" />
     <ClInclude Include="Frogger\Entity.h" />
+    <ClInclude Include="Frogger\Frog.h" />
+    <ClInclude Include="Frogger\GameManager.h" />
     <ClInclude Include="Frogger\GameObject.h" />
+    <ClInclude Include="Frogger\LightSource.h" />
+    <ClInclude Include="Frogger\OrthogonalCamera.h" />
+    <ClInclude Include="Frogger\PerpectiveCamera.h" />
     <ClInclude Include="Frogger\River.h" />
+    <ClInclude Include="Frogger\RiverSide.h" />
+    <ClInclude Include="Frogger\Road.h" />
+    <ClInclude Include="Frogger\RoadSide.h" />
+    <ClInclude Include="Frogger\shaderDemo.h" />
     <ClInclude Include="Frogger\StaticObject.h" />
+    <ClInclude Include="Frogger\Timberlog.h" />
+    <ClInclude Include="Frogger\Turtle.h" />
     <ClInclude Include="Frogger\Vector3.h" />
+    <ClInclude Include="Frogger\Vector4.h" />
+    <ClInclude Include="Frogger\vsMathLib.h" />
+    <ClInclude Include="Frogger\vsShaderLib.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Frogger\Bus.cpp" />
     <ClCompile Include="Frogger\Camera.cpp" />
+    <ClCompile Include="Frogger\Car.cpp" />
+    <ClCompile Include="Frogger\DynamicObject.cpp" />
     <ClCompile Include="Frogger\Entity.cpp" />
+    <ClCompile Include="Frogger\Frog.cpp" />
+    <ClCompile Include="Frogger\GameManager.cpp" />
     <ClCompile Include="Frogger\GameObject.cpp" />
+    <ClCompile Include="Frogger\LightSource.cpp" />
+    <ClCompile Include="Frogger\OrthogonalCamera.cpp" />
+    <ClCompile Include="Frogger\PerpectiveCamera.cpp" />
+    <ClCompile Include="Frogger\River.cpp" />
+    <ClCompile Include="Frogger\RiverSide.cpp" />
+    <ClCompile Include="Frogger\Road.cpp" />
+    <ClCompile Include="Frogger\RoadSide.cpp" />
+    <ClCompile Include="Frogger\shaderDemo.cpp" />
+    <ClCompile Include="Frogger\Timberlog.cpp" />
+    <ClCompile Include="Frogger\Turtle.cpp" />
     <ClCompile Include="Frogger\Vector3.cpp" />
+    <ClCompile Include="Frogger\Vector4.cpp" />
+    <ClCompile Include="Frogger\vsMathLib.cpp" />
+    <ClCompile Include="Frogger\vsShaderLib.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Frogger\Shaders\helloWorld.frag" />
+    <None Include="Frogger\Shaders\helloWorld.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
