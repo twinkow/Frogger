@@ -557,9 +557,9 @@ VSShaderLib::textFileRead(std::string fileName) {
 	int count=0;
 
 	if (fileName != "") {
-		errno_t result = fopen_s(&fp, fileName.c_str(),"rt");
+		fp = fopen(fileName.c_str(),"rt");
 
-		if (result != NULL) {
+		if (fp != NULL) {
       
 			fseek(fp, 0, SEEK_END);
 			count = ftell(fp);
