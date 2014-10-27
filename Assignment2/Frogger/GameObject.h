@@ -2,11 +2,14 @@
 #define GAMEOBJECT_H
 
 #include "Entity.h"
+
+#include "VSMathlib.h"
+#include "VSShaderlib.h"
 //#include "DrawComponents.h"
 
 
 
-class GameObject : Entity
+class GameObject : public Entity
 {
 public:
 

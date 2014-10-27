@@ -18,8 +18,9 @@
 #include <string>
 
 #include "shaderDemo.h"
-//#include "GameObject.h"
+
 #include "River.h"
+#include "RiverSide.h"
 
 // include GLEW to access OpenGL 3.3 functions
 #include <GL/glew.h>
@@ -31,6 +32,7 @@ VSMathLib *vsml;
 VSShaderLib shader;
 
 River river;
+RiverSide riverSide;
 
 
 // Window width / height
@@ -505,7 +507,10 @@ void renderScene(void) {
 
 	/////////////////////////////////////////////////////////
 	glBindVertexArray(vao);
+
 	river.draw(vsml, shader);
+	riverSide.draw(vsml, shader);
+
 	//drawStreet();
 	//drawRiver();
 	//drawFrog();

@@ -33,3 +33,5 @@
 *.vcxproj
 *.filters
 Assignment2/Frogger/Debug/
+*.ilk
+*.pdb

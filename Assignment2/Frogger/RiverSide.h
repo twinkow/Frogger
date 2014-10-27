@@ -3,14 +3,14 @@
 
 #include "StaticObject.h"
 
-class RiverSide : StaticObject
+class RiverSide : public StaticObject
 {
 public:
 
 	RiverSide();
 	~RiverSide();
 
-	void draw();
+	void draw(VSMathLib *vsml, VSShaderLib shader);
 };
 
 #endif
