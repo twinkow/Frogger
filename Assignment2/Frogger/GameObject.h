@@ -4,9 +4,12 @@
 #include "Entity.h"
 //#include "DrawComponents.h"
 
+#include "VSMathlib.h"
+#include "VSShaderlib.h"
 
 
-class GameObject : Entity
+
+class GameObject : public Entity
 {
 public:
 

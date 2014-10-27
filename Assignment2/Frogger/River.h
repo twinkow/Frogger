@@ -3,8 +3,6 @@
 
 #include "StaticObject.h"
 
-#include "VSMathlib.h"
-#include "VSShaderlib.h"
 
 
 class River : public StaticObject

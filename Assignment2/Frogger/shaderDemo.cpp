@@ -20,6 +20,8 @@
 #include "shaderDemo.h"
 //#include "GameObject.h"
 #include "River.h"
+#include "Road.h"
+#include "RoadSide.h"
 
 // include GLEW to access OpenGL 3.3 functions
 #include <GL/glew.h>
@@ -31,6 +33,8 @@ VSMathLib *vsml;
 VSShaderLib shader;
 
 River river;
+Road road;
+RoadSide roadside;
 
 
 // Window width / height
@@ -506,6 +510,8 @@ void renderScene(void) {
 	/////////////////////////////////////////////////////////
 	glBindVertexArray(vao);
 	river.draw(vsml, shader);
+	road.draw(vsml, shader);
+	roadside.draw(vsml, shader);
 	//drawStreet();
 	//drawRiver();
 	//drawFrog();

@@ -3,14 +3,14 @@
 
 #include "StaticObject.h"
 
-class Road : StaticObject
+class Road : public StaticObject
 {
 public:
 
 	Road();
 	~Road();
 
-	void draw();
+	void draw(VSMathLib *vsml, VSShaderLib shader);
 };
 
 #endif
