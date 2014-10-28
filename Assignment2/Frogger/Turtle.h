@@ -10,7 +10,7 @@ public:
 	Turtle();
 	~Turtle();
 
-	void draw();
+	void draw(VSMathLib *vsml, VSShaderLib shader);
 
 };
 #endif
